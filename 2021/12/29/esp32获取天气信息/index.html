@@ -464,12 +464,12 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前一段时间接触了很多esp32的工程，包括bilibili小电视以及稚晖君开源的Holocube小电视等，我对esp32这款国产芯片产生了兴趣，通过硬声APP和嘉立创上的活动我有幸免费获得了几块ESP32-WROOM的开发板，通过一天的学习我已经初步上手了这款开发板，下面我重点介绍一下esp32的联网功能和一个实例：上网获取天气信息。</p>
-<h2 id="ESP32芯片简介"><a href="#ESP32芯片简介" class="headerlink" title="ESP32芯片简介"></a>ESP32芯片简介</h2><p>ESP32是乐鑫信息科技推出的一块WIFI芯片。ESP32 集成了天线开关、射频 balun、功率放大器、低噪放大器、过滤器和电源管理模块，整个解决方案占用了最少的印刷电路板面积。2.4 GHz Wi-Fi 加蓝牙双模芯片采用 TSMC 低功耗 40nm 技术，功耗性能和射频性能最佳，安全可靠，易于扩展至各种应用。</p>
+<h2 id="ESP32芯片简介"><a href="#ESP32芯片简介" class="headerlink" title="ESP32芯片简介"></a>ESP32芯片简介</h2><p>ESP32是乐鑫信息科技推出的一块WIFI芯片。ESP32集成了天线开关、射频 balun、功率放大器、低噪放大器、过滤器和电源管理模块，整个解决方案占用了最少的印刷电路板面积。2.4 GHz Wi-Fi 加蓝牙双模芯片采用 TSMC 低功耗 40nm 技术，功耗性能和射频性能最佳，安全可靠，易于扩展至各种应用。</p>
 <p>esp32的<a target="_blank" rel="noopener" href="https://www.espressif.com/en/support/documents/technical-documents">参考手册</a></p>
 <h2 id="ESP32芯片的编程方法及工具"><a href="#ESP32芯片的编程方法及工具" class="headerlink" title="ESP32芯片的编程方法及工具"></a>ESP32芯片的编程方法及工具</h2><p>这里推荐使用VScode编写，下载vscode后需要添加Platfrom插件，下面给出已开源的教程</p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1tv411w74d?from=search&seid=13527870619126391863&spm_id_from=333.337.0.0">视频教程</a></p>
-<h2 id="ESP32获取天气信息"><a href="#ESP32获取天气信息" class="headerlink" title="ESP32获取天气信息"></a>ESP32获取天气信息</h2><p>这里参考了上述视频教程中的第五讲的代码，在此基础上进行的修改。<br>修改过程如下：<br>wifi的连接：<br><img src="/img/Image.png"></p>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h2 id="ESP32获取天气信息"><a href="#ESP32获取天气信息" class="headerlink" title="ESP32获取天气信息"></a>ESP32获取天气信息</h2><p>这里参考了上述视频教程中的第五讲的代码，在此基础上进行的修改。<br>修改过程如下：<br>1.wifi的连接：<br><img src="/img/Image.png"><br>这里的<code>Wifi.begin</code>是一个集成的函数，形参分别填所要连接的Wifi的名称和密码。</p>
+<p>2.和风天气秘钥和城市ID：<br><img src="/img/Image1.png"><br><code>key</code>填的是和风天气上创建的工程秘钥<br><code>weathermessige</code>填的是和风天气的API接口，只需要将location改成需要填写的城市的ID即可，<a target="_blank" rel="noopener" href="https://blog.csdn.net/iechenyb/article/details/78652461">城市ID查询</a></p>
 
                 
             </div>
@@ -496,7 +496,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://facerman.github.io/2021/12/29/esp32%E8%8E%B7%E5%8F%96%E5%A4%A9%E6%B0%94%E4%BF%A1%E6%81%AF/">https://facerman.github.io/2021/12/29/esp32%E8%8E%B7%E5%8F%96%E5%A4%A9%E6%B0%94%E4%BF%A1%E6%81%AF/</a>
+                    <a href="https://facerman.github.io/2021/12/29/ESP32%E8%8E%B7%E5%8F%96%E5%A4%A9%E6%B0%94%E4%BF%A1%E6%81%AF/">https://facerman.github.io/2021/12/29/ESP32%E8%8E%B7%E5%8F%96%E5%A4%A9%E6%B0%94%E4%BF%A1%E6%81%AF/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -710,7 +710,7 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2021/12/29/esp32%E8%8E%B7%E5%8F%96%E5%A4%A9%E6%B0%94%E4%BF%A1%E6%81%AF/">
+                <a href="/2021/12/29/ESP32%E8%8E%B7%E5%8F%96%E5%A4%A9%E6%B0%94%E4%BF%A1%E6%81%AF/">
                     <div class="card-image">
                         
                         
@@ -748,7 +748,7 @@
                 本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/2021/12/29/esp32%E8%8E%B7%E5%8F%96%E5%A4%A9%E6%B0%94%E4%BF%A1%E6%81%AF/">
+                <a href="/2021/12/29/ESP32%E8%8E%B7%E5%8F%96%E5%A4%A9%E6%B0%94%E4%BF%A1%E6%81%AF/">
                     <div class="card-image">
                         
                         
