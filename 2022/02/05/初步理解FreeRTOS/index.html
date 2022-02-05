@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ESP32上网获取天气信息, facerman">
-    <meta name="description" content="这是一个wifi模块的简单教程
-前言前一段时间接触了很多esp32的工程，包括bilibili小电视以及稚晖君开源的Holocube小电视等，我对esp32这款国产芯片产生了兴趣，通过硬声APP和嘉立创上的活动我有幸免费获得了几块ESP32">
+    <meta name="keywords" content="初步理解FreeRTOS, facerman">
+    <meta name="description" content="前言​        最近一段时间将FreeRTOS操作系统的知识系统的了解了一遍，并开始进行实践测试，通过学习韦东山老师的系列视频，我的收获很大，这里变将韦东山老师的PPT放在这里，供我以后复习使用
+1. RTOS的引入1.1 用人来类比">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +18,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>ESP32上网获取天气信息 | facerman</title>
+    <title>初步理解FreeRTOS | facerman</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/img/img1.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ESP32上网获取天气信息</h1>
+                    <h1 class="description center-align post-title">初步理解FreeRTOS</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E3%80%81Wifi%E3%80%81Json%E8%A7%A3%E7%AE%97/">
-                                <span class="chip bg-color">嵌入式、Wifi、Json解算</span>
+                            <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-FreeRTOS-%E5%B5%8C%E5%85%A5%E5%BC%8F/">
+                                <span class="chip bg-color">操作系统 FreeRTOS 嵌入式</span>
                             </a>
                         
                     </div>
@@ -447,7 +447,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-01-02
+                    2022-02-05
                 </div>
                 
 
@@ -468,25 +468,213 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>这是一个wifi模块的简单教程</p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前一段时间接触了很多esp32的工程，包括bilibili小电视以及稚晖君开源的Holocube小电视等，我对esp32这款国产芯片产生了兴趣，通过硬声APP和嘉立创上的活动我有幸免费获得了几块ESP32-WROOM的开发板，通过一天的学习我已经初步上手了这款开发板，下面我重点介绍一下esp32的联网功能和一个实例：上网获取天气信息。</p>
-<h2 id="ESP32芯片简介"><a href="#ESP32芯片简介" class="headerlink" title="ESP32芯片简介"></a>ESP32芯片简介</h2><p>ESP32是乐鑫信息科技推出的一块WIFI芯片。ESP32集成了天线开关、射频 balun、功率放大器、低噪放大器、过滤器和电源管理模块，整个解决方案占用了最少的印刷电路板面积。2.4 GHz Wi-Fi 加蓝牙双模芯片采用 TSMC 低功耗 40nm 技术，功耗性能和射频性能最佳，安全可靠，易于扩展至各种应用。</p>
-<p>esp32的<a target="_blank" rel="noopener" href="https://www.espressif.com/en/support/documents/technical-documents">参考手册</a></p>
-<h2 id="ESP32芯片的编程方法及工具"><a href="#ESP32芯片的编程方法及工具" class="headerlink" title="ESP32芯片的编程方法及工具"></a>ESP32芯片的编程方法及工具</h2><p>这里推荐使用VScode编写，下载vscode后需要添加Platfrom插件，下面给出已开源的教程</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1tv411w74d?from=search&seid=13527870619126391863&spm_id_from=333.337.0.0">视频教程</a></p>
-<h2 id="ESP32获取天气信息"><a href="#ESP32获取天气信息" class="headerlink" title="ESP32获取天气信息"></a>ESP32获取天气信息</h2><p>这里参考了上述视频教程中的第五讲的代码，在此基础上进行的修改。<br>修改过程如下：</p>
-<ol>
-<li><p>wifi的连接：<br><img src="/img/Image.png"><br>这里的<code>Wifi.begin</code>是一个集成的函数，形参分别填所要连接的Wifi的名称和密码。</p>
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>​        最近一段时间将FreeRTOS操作系统的知识系统的了解了一遍，并开始进行实践测试，通过学习韦东山老师的系列视频，我的收获很大，这里变将韦东山老师的PPT放在这里，供我以后复习使用</p>
+<h2 id="1-RTOS的引入"><a href="#1-RTOS的引入" class="headerlink" title="1. RTOS的引入"></a>1. RTOS的引入</h2><h3 id="1-1-用人来类比单片机程序和RTOS"><a href="#1-1-用人来类比单片机程序和RTOS" class="headerlink" title="1.1 用人来类比单片机程序和RTOS"></a>1.1 用人来类比单片机程序和RTOS</h3><p><img src="/G:/blog\source_posts\初步理解FreeRTOS\pre/01_mother_do_jobs.png"></p>
+<p>妈妈要一边给小孩喂饭，一边加班跟同事微信交流，怎么办？</p>
+<h4 id="1-1-1-我无法一心多用"><a href="#1-1-1-我无法一心多用" class="headerlink" title="1.1.1 我无法一心多用"></a>1.1.1 我无法一心多用</h4><p>对于单线条的人，不能分心、不能同时做事，她只能这样做：</p>
+<ul>
+<li>给小孩喂一口饭</li>
+<li>瞄一眼电脑，有信息就去回复</li>
+<li>再回来给小孩喂一口饭</li>
+<li>如果小孩吃这口饭太慢，她回复同事的信息也就慢了，被同事催：你半天都不回我？</li>
+<li>如果回复同事的信息要写一大堆，小孩就着急得大哭起来。</li>
+</ul>
+<p>这种做法，在软件开发上就是一般的单片机开发，没有用操作系统。</p>
+<h4 id="1-2-2-我可以一心多用"><a href="#1-2-2-我可以一心多用" class="headerlink" title="1.2.2 我可以一心多用"></a>1.2.2 我可以一心多用</h4><p>对于眼明手快的人，她可以一心多用，她这样做：</p>
+<ul>
+<li>左手拿勺子，给小孩喂饭</li>
+<li>右手敲键盘，回复同事</li>
+<li>两不耽误，小孩“以为”妈妈在专心喂饭，同事“以为”她在专心聊天</li>
+<li>但是脑子只有一个啊，虽然说“一心多用”，但是谁能同时思考两件事？</li>
+<li>只是她反应快，上一秒钟在考虑夹哪个菜给小孩，下一秒钟考虑给同事回复什么信息</li>
+</ul>
+<p>这种做法，在软件开发上就是使用操作系统，在单片机里叫做使用RTOS。</p>
+<p>RTOS的意思是：Real-time operating system，实时操作系统。</p>
+<p>我们使用的Windows也是操作系统，被称为通用操作系统。使用Windows时，我们经常碰到程序卡死、停顿的现象，日常生活中这可以忍受。</p>
+<p>但是在电梯系统中，你按住开门键时如果没有即刻反应，即使只是慢个1秒，也会夹住人。</p>
+<p>在专用的电子设备中，“实时性”很重要。</p>
+<h3 id="1-2-程序简单示例"><a href="#1-2-程序简单示例" class="headerlink" title="1.2 程序简单示例"></a>1.2 程序简单示例</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 经典单片机程序</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        喂一口饭();</span><br><span class="line">        回一个信息();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">------------------------------------------------------</span><br><span class="line"><span class="comment">// RTOS程序    </span></span><br><span class="line">喂饭()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        喂一口饭();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">回信息()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        回一个信息();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    create_task(喂饭);</span><br><span class="line">    create_task(回信息);</span><br><span class="line">    start_scheduler();</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        sleep();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/G:/blog\source_posts\初步理解FreeRTOS\pre/02_program_with_rtos.png" alt="image-20210712065106008"></p>
+<h2 id="2-任务的引入"><a href="#2-任务的引入" class="headerlink" title="2. 任务的引入"></a>2. 任务的引入</h2><h3 id="2-1-任务是什么"><a href="#2-1-任务是什么" class="headerlink" title="2.1 任务是什么"></a>2.1 任务是什么</h3><p>从这个角度想：函数被暂停时，我们怎么保存它、保存什么？怎么恢复它、恢复什么？</p>
+<ul>
+<li>任务是一个函数吗？<ul>
+<li>函数保存在Flash上</li>
+<li>Flash上的函数无需再次保存</li>
+<li>所以：任务不仅仅是函数</li>
+</ul>
 </li>
-<li><p>和风天气秘钥和城市ID：<br><img src="/img/Image1.png"><br><code>key</code>填的是和风天气上创建的工程秘钥<br><code>weathermessige</code>填的是和风天气的API接口，只需要将location改成需要填写的城市的ID即可。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/iechenyb/article/details/78652461">城市ID查询</a></p>
+<li>任务时变量吗？<ul>
+<li>单纯通过变量无法做事</li>
+<li>所以：任务不仅仅是变量</li>
+</ul>
 </li>
-<li><p>和风天气创建工程步骤：<br> 百度搜索和风天气：<br> <img src="/img/Image2.png"><br> 进入后点击控制台：<br> <img src="/img/Image3.png"><br> 创建账户注册并登陆<br> 登陆成功后为:<br> <img src="/img/Image4.png"><br> 点击应用管理：<br> <img src="/img/Image5.png"><br> 点击创建管理<br> 选择免费开发板，应用名称随便填，选择<code>Web API</code>，key的名称随便填，就创建成功了，注意普通用户只能创建一个应用，想获取多个秘钥用在不同的设备上只需要点击添加数据key就可</p>
+<li>任务时一个运行中的函数<ul>
+<li>运行中：可以曾经运行，现在暂停了，但是未退出</li>
+<li>怎么描述一个运行中的函数</li>
+<li>假设在某一个瞬间时间停止，你怎么记录这个运行中的函数</li>
+</ul>
 </li>
-<li><p>重要的获取数据函数：<br><img src="/img/Image8.png"><br>HTTPClient http 是使用Web API模式的意思<br>第二行是通过网页发送请求数据，具体情况如下：<br><img src="/img/Image9.png"><br>发送回来的数据就是一种Json格式，需要我们进行Json解算<br>第三行将http获取的第一个数据存进httpCode里<br>if判断如果获取的第一个数据httpCode&lt;0则表示没有获取成功，会直接到else里打印获取失败<br>如果&gt;0则表示获取成功，进入下一个判断第一个数据是否等于200<br>从图中可以看出第一个数据成功获取的话是等于200的，代码中变量初始化定义成了200<br>如果等于进入后会将http获取的所有字符串保存到resbuff中<br>然后调用一个库函数来Json解算（里面没整）<br>如果我们想取出其中的某一项数据，则直接doc[“”][“”]取出存到一个变量中去即可<br>注意例如cloud我们在提取时他是在now大数据下的（原式数据中有{}括起来表示是其数据下的数据），所以写成doc[“now”][“cloud”]</p>
+<li>要立即任务的本质，需要理解ARM架构、汇编</li>
+</ul>
+<h3 id="2-2-理解C函数的内部机制"><a href="#2-2-理解C函数的内部机制" class="headerlink" title="2.2 理解C函数的内部机制"></a>2.2 理解C函数的内部机制</h3><p>main函数的作用：</p>
+<ul>
+<li>调用add_val</li>
+<li>实现：a = a + b</li>
+</ul>
+<p>分析add_val函数的内部实现，可以理解C函数的内部机制。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* a = a + b */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add_val</span><span class="params">(<span class="keyword">int</span> *pa, <span class="keyword">int</span> *pb)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//*pa = *pa + *pb;</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">volatile</span> <span class="keyword">int</span> tmp;</span><br><span class="line"></span><br><span class="line">	tmp = *pa;</span><br><span class="line">	tmp = tmp + *pb;</span><br><span class="line">	*pa = tmp;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( <span class="keyword">void</span> )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	add_val(&amp;a, &amp;b);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-2-1-ARM架构"><a href="#2-2-1-ARM架构" class="headerlink" title="2.2.1 ARM架构"></a>2.2.1 ARM架构</h4><p>ARM芯片属于精简指令集计算机(RISC：Reduced Instruction Set Computing)，它所用的指令比较简单，有如下特点：</p>
+<ul>
+<li>对内存只有读、写指令</li>
+<li>对于数据的运算是在CPU内部实现</li>
+<li>使用RISC指令的CPU复杂度小一点，易于设计</li>
+</ul>
+<p> 比如对于a=a+b这样的算式，需要经过下面4个步骤才可以实现：</p>
+<p><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/01_arm_architecture.png" alt="image-20211030125916114"></p>
+<p>细看这几个步骤，有些疑问：</p>
+<ul>
+<li>读a，那么a的值读出来后保存在CPU里面哪里？</li>
+<li>读b，那么b的值读出来后保存在CPU里面哪里？</li>
+<li>a+b的结果又保存在哪里？</li>
+</ul>
+<p> 我们需要深入ARM处理器的内部。简单概括如下，我们先忽略各种CPU模式(系统模式、用户模式等等)。</p>
+<p><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/02_arm_registers.png" alt="image-20211030130038029"></p>
+<p>CPU运行时，先去Flash上取得指令，再执行指令：</p>
+<ul>
+<li>把内存a的值读入CPU寄存器R0</li>
+<li>把内存b的值读入CPU寄存器R1</li>
+<li>把R0、R1累加，存入R0</li>
+<li>把R0的值写入内存a</li>
+</ul>
+<p>怎么理解Flash上的指令？看下一节。</p>
+<h4 id="2-2-2-汇编指令"><a href="#2-2-2-汇编指令" class="headerlink" title="2.2.2 汇编指令"></a>2.2.2 汇编指令</h4><p>本直播只需要记住5条汇编指令：</p>
+<ul>
+<li>读内存：Load，LDR</li>
+<li>写内存：Store，STR</li>
+<li>加法：ADD</li>
+<li>入栈：PUSH，实质上就是写内存STR</li>
+<li>出栈：POP，实质上就是读内存LDR</li>
+</ul>
+<p>要读内存：读内存哪个地址？读到的数据保存在哪里？读多少字节？</p>
+<ul>
+<li>LDR R0, [R1, #0x00]<ul>
+<li>源地址：R1+0x00，注意：不是读R1，是把R1的值当做内存的地址</li>
+<li>目的：R0，CPU的寄存器</li>
+<li>长度：4字节，LDR指令就是读4字节，LDRH是读2字节，LDRB是读1字节</li>
+</ul>
 </li>
-<li><p>注意一开始可能会有几次的申请不成功，过三四次后一般就正常了，再不行就是代码问题了，普通用户每天能够申请几千次，注意不要刷新频率过快。</p>
+</ul>
+<p>要写内存：写内存哪个地址？从哪里得到数据？写多少字节？</p>
+<ul>
+<li>STR R0, [R1, #0x00]<ul>
+<li>目的地址：R1+0x00，注意：不是写R1，是把R1的值当做内存的地址</li>
+<li>源：R0，CPU的寄存器</li>
+<li>长度：4字节，STR指令就是读4字节，STRH是读2字节，STRB是读1字节</li>
+</ul>
 </li>
-</ol>
+</ul>
+<p>入栈：把CPU的寄存器的值，写到内存上</p>
+<ul>
+<li><p>PUSH {R3, LR}</p>
+<ul>
+<li>源：CPU的寄存器R3、LR的值</li>
+<li>目的：内存，内存哪里？使用CPU的SP寄存器指定内存地址</li>
+<li>长度：大括号里所有寄存器的数据长度，每个寄存器4字节</li>
+<li>注意：低编号的寄存器，保存在内存的低地址处</li>
+<li>执行结果如下<br><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/03_push.png" alt="image-20211030132140142"></li>
+</ul>
+</li>
+</ul>
+<p>出栈：把内存中的数值，写到CPU的寄存器</p>
+<ul>
+<li>POP {R3, PC}<ul>
+<li>源：内存，内存哪里？使用CPU的SP寄存器指定内存地址</li>
+<li>目的：CPU的寄存器R3、PC的值</li>
+<li>长度：大括号里所有寄存器的数据长度，每个寄存器4字节</li>
+<li>注意：内存的低地址处的数据，写到CPU低编号的寄存器</li>
+<li>执行结果如下<br><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/04_pop.png" alt="image-20211030132119565"></li>
+</ul>
+</li>
+</ul>
+<p>其他知识：</p>
+<ul>
+<li>CPU内部有R0、R1、……、R15共16个寄存器</li>
+<li>某些寄存器有特殊作用<ul>
+<li>R13，别名SP，栈寄存器，保存着栈的地址</li>
+<li>R14，别名LR，返回地址，保存着函数的返回地址</li>
+<li>R15，别名PC，程序计数器，也就是当期程序运行到哪了</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-3-运行流程分析"><a href="#2-2-3-运行流程分析" class="headerlink" title="2.2.3 运行流程分析"></a>2.2.3 运行流程分析</h4><p><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/05_asm.png" alt="image-20211030133425977"></p>
+<h3 id="2-3-怎么保存函数的现场"><a href="#2-3-怎么保存函数的现场" class="headerlink" title="2.3 怎么保存函数的现场"></a>2.3 怎么保存函数的现场</h3><p><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/06_how_to_save_env.png" alt="image-20211030133612292"></p>
+<h4 id="2-3-1-要保存什么"><a href="#2-3-1-要保存什么" class="headerlink" title="2.3.1 要保存什么"></a>2.3.1 要保存什么</h4><ul>
+<li><p>程序运行到了哪里？PC寄存器的值</p>
+</li>
+<li><p>R2的值：我辛辛苦苦从内存里读到的值放在R2里，函数继续运行时，R2的值不要被破坏了</p>
+</li>
+<li><p>只需要保存R2吗？切换任务的话，所有的寄存器都要保存</p>
+</li>
+<li><p>保存在哪里？内存里! 内存哪里？栈里！</p>
+</li>
+</ul>
+<h4 id="2-3-2-保存现场的几种场景"><a href="#2-3-2-保存现场的几种场景" class="headerlink" title="2.3.2 保存现场的几种场景"></a>2.3.2 保存现场的几种场景</h4><ul>
+<li><p>函数调用</p>
+</li>
+<li><p>中断处理</p>
+</li>
+<li><p>任务切换</p>
+</li>
+</ul>
+<h2 id="3-FreeRTOS中怎么创建任务"><a href="#3-FreeRTOS中怎么创建任务" class="headerlink" title="3. FreeRTOS中怎么创建任务"></a>3. FreeRTOS中怎么创建任务</h2><h3 id="3-1-所需参数"><a href="#3-1-所需参数" class="headerlink" title="3.1 所需参数"></a>3.1 所需参数</h3><h3 id="3-2-参数详解"><a href="#3-2-参数详解" class="headerlink" title="3.2 参数详解"></a>3.2 参数详解</h3><ul>
+<li>分配了TCB结构体</li>
+<li>分配了栈</li>
+<li>在栈里写入了函数地址、参数</li>
+</ul>
+<h2 id="4-调度机制概述"><a href="#4-调度机制概述" class="headerlink" title="4. 调度机制概述"></a>4. 调度机制概述</h2><h3 id="4-1-优先级与状态"><a href="#4-1-优先级与状态" class="headerlink" title="4.1 优先级与状态"></a>4.1 优先级与状态</h3><ul>
+<li>优先级不同<ul>
+<li>高优先级的任务，优先执行，可以抢占低优先级的任务</li>
+<li>高优先级的任务不停止，低优先级的任务永远无法执行</li>
+<li>同等优先级的任务，轮流执行：时间片轮转</li>
+</ul>
+</li>
+<li>状态<ul>
+<li>运行态：running</li>
+<li>就绪态：ready</li>
+<li>阻塞：blocked，等待某件事(时间、事件)</li>
+<li>暂停：suspend，休息去了</li>
+</ul>
+</li>
+<li>怎么管理？<ul>
+<li>怎么取出要运行的任务？<ul>
+<li>找到最高优先级的运行态、就绪态任务，运行它</li>
+<li>如果大家平级，轮流执行：排队，链表前面的先运行，运行1个tick后乖乖地去链表尾部排队</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-2-调度方法"><a href="#4-2-调度方法" class="headerlink" title="4.2 调度方法"></a>4.2 调度方法</h3><ul>
+<li>谁进行调度？<ul>
+<li>TICK中断！</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-3-状态切换"><a href="#4-3-状态切换" class="headerlink" title="4.3 状态切换"></a>4.3 状态切换</h3><p><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/07_taskdelay.png" alt="image-20211030145735013"></p>
+<h2 id="5-通过链表深入理解调度机制"><a href="#5-通过链表深入理解调度机制" class="headerlink" title="5. 通过链表深入理解调度机制"></a>5. 通过链表深入理解调度机制</h2><ul>
+<li><p>可抢占：高优先级的任务先运行</p>
+</li>
+<li><p>时间片轮转：同优先级的任务轮流执行</p>
+</li>
+<li><p>空闲任务礼让：如果有同是优先级0的其他就绪任务，空闲任务主动放弃一次运行机会</p>
+</li>
+</ul>
 
                 
             </div>
@@ -513,7 +701,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://facerman.github.io/2022/01/02/ESP32%E8%8E%B7%E5%8F%96%E5%A4%A9%E6%B0%94%E4%BF%A1%E6%81%AF/">https://facerman.github.io/2022/01/02/ESP32%E8%8E%B7%E5%8F%96%E5%A4%A9%E6%B0%94%E4%BF%A1%E6%81%AF/</a>
+                    <a href="https://facerman.github.io/2022/02/05/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3FreeRTOS/">https://facerman.github.io/2022/02/05/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3FreeRTOS/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -551,8 +739,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E3%80%81Wifi%E3%80%81Json%E8%A7%A3%E7%AE%97/">
-                                    <span class="chip bg-color">嵌入式、Wifi、Json解算</span>
+                                <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-FreeRTOS-%E5%B5%8C%E5%85%A5%E5%BC%8F/">
+                                    <span class="chip bg-color">操作系统 FreeRTOS 嵌入式</span>
                                 </a>
                             
                         </div>
@@ -726,9 +914,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/02/05/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3FreeRTOS/">
                     <div class="card-image">
@@ -746,9 +935,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-05
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-05
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -757,6 +946,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -772,7 +962,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2022/01/02/ESP32%E8%8E%B7%E5%8F%96%E5%A4%A9%E6%B0%94%E4%BF%A1%E6%81%AF/">
@@ -801,7 +991,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
