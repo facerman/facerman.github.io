@@ -469,7 +469,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>​        最近一段时间将FreeRTOS操作系统的知识系统的了解了一遍，并开始进行实践测试，通过学习韦东山老师的系列视频，我的收获很大，这里变将韦东山老师的PPT放在这里，供我以后复习使用</p>
-<h2 id="1-RTOS的引入"><a href="#1-RTOS的引入" class="headerlink" title="1. RTOS的引入"></a>1. RTOS的引入</h2><h3 id="1-1-用人来类比单片机程序和RTOS"><a href="#1-1-用人来类比单片机程序和RTOS" class="headerlink" title="1.1 用人来类比单片机程序和RTOS"></a>1.1 用人来类比单片机程序和RTOS</h3><p><img src="/G:/blog\source_posts\初步理解FreeRTOS\pre/01_mother_do_jobs.png"></p>
+<h2 id="1-RTOS的引入"><a href="#1-RTOS的引入" class="headerlink" title="1. RTOS的引入"></a>1. RTOS的引入</h2><h3 id="1-1-用人来类比单片机程序和RTOS"><a href="#1-1-用人来类比单片机程序和RTOS" class="headerlink" title="1.1 用人来类比单片机程序和RTOS"></a>1.1 用人来类比单片机程序和RTOS</h3><p><img src="/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3FreeRTOS%5Cpre/01_mother_do_jobs.png"></p>
 <p>妈妈要一边给小孩喂饭，一边加班跟同事微信交流，怎么办？</p>
 <h4 id="1-1-1-我无法一心多用"><a href="#1-1-1-我无法一心多用" class="headerlink" title="1.1.1 我无法一心多用"></a>1.1.1 我无法一心多用</h4><p>对于单线条的人，不能分心、不能同时做事，她只能这样做：</p>
 <ul>
@@ -497,7 +497,7 @@
 
 
 
-<p><img src="/G:/blog\source_posts\初步理解FreeRTOS\pre/02_program_with_rtos.png" alt="image-20210712065106008"></p>
+<p><img src="/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3FreeRTOS%5Cpre/02_program_with_rtos.png" alt="image-20210712065106008"></p>
 <h2 id="2-任务的引入"><a href="#2-任务的引入" class="headerlink" title="2. 任务的引入"></a>2. 任务的引入</h2><h3 id="2-1-任务是什么"><a href="#2-1-任务是什么" class="headerlink" title="2.1 任务是什么"></a>2.1 任务是什么</h3><p>从这个角度想：函数被暂停时，我们怎么保存它、保存什么？怎么恢复它、恢复什么？</p>
 <ul>
 <li>任务是一个函数吗？<ul>
@@ -536,7 +536,7 @@
 <li>使用RISC指令的CPU复杂度小一点，易于设计</li>
 </ul>
 <p> 比如对于a=a+b这样的算式，需要经过下面4个步骤才可以实现：</p>
-<p><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/01_arm_architecture.png" alt="image-20211030125916114"></p>
+<p><img src="/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3FreeRTOS%5Carm/01_arm_architecture.png" alt="image-20211030125916114"></p>
 <p>细看这几个步骤，有些疑问：</p>
 <ul>
 <li>读a，那么a的值读出来后保存在CPU里面哪里？</li>
@@ -544,7 +544,7 @@
 <li>a+b的结果又保存在哪里？</li>
 </ul>
 <p> 我们需要深入ARM处理器的内部。简单概括如下，我们先忽略各种CPU模式(系统模式、用户模式等等)。</p>
-<p><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/02_arm_registers.png" alt="image-20211030130038029"></p>
+<p><img src="/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3FreeRTOS%5Carm/02_arm_registers.png" alt="image-20211030130038029"></p>
 <p>CPU运行时，先去Flash上取得指令，再执行指令：</p>
 <ul>
 <li>把内存a的值读入CPU寄存器R0</li>
@@ -587,7 +587,7 @@
 <li>目的：内存，内存哪里？使用CPU的SP寄存器指定内存地址</li>
 <li>长度：大括号里所有寄存器的数据长度，每个寄存器4字节</li>
 <li>注意：低编号的寄存器，保存在内存的低地址处</li>
-<li>执行结果如下<br><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/03_push.png" alt="image-20211030132140142"></li>
+<li>执行结果如下<br><img src="/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3FreeRTOS%5Carm/03_push.png" alt="image-20211030132140142"></li>
 </ul>
 </li>
 </ul>
@@ -598,7 +598,7 @@
 <li>目的：CPU的寄存器R3、PC的值</li>
 <li>长度：大括号里所有寄存器的数据长度，每个寄存器4字节</li>
 <li>注意：内存的低地址处的数据，写到CPU低编号的寄存器</li>
-<li>执行结果如下<br><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/04_pop.png" alt="image-20211030132119565"></li>
+<li>执行结果如下<br><img src="/_posts%5C%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3FreeRTOS%5Carm/04_pop.png" alt="image-20211030132119565"></li>
 </ul>
 </li>
 </ul>
@@ -612,8 +612,8 @@
 </ul>
 </li>
 </ul>
-<h4 id="2-2-3-运行流程分析"><a href="#2-2-3-运行流程分析" class="headerlink" title="2.2.3 运行流程分析"></a>2.2.3 运行流程分析</h4><p><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/05_asm.png" alt="image-20211030133425977"></p>
-<h3 id="2-3-怎么保存函数的现场"><a href="#2-3-怎么保存函数的现场" class="headerlink" title="2.3 怎么保存函数的现场"></a>2.3 怎么保存函数的现场</h3><p><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/06_how_to_save_env.png" alt="image-20211030133612292"></p>
+<h4 id="2-2-3-运行流程分析"><a href="#2-2-3-运行流程分析" class="headerlink" title="2.2.3 运行流程分析"></a>2.2.3 运行流程分析</h4><p><img src="/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3FreeRTOS%5Carm/05_asm.png" alt="image-20211030133425977"></p>
+<h3 id="2-3-怎么保存函数的现场"><a href="#2-3-怎么保存函数的现场" class="headerlink" title="2.3 怎么保存函数的现场"></a>2.3 怎么保存函数的现场</h3><p><img src="/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3FreeRTOS%5Carm/06_how_to_save_env.png" alt="image-20211030133612292"></p>
 <h4 id="2-3-1-要保存什么"><a href="#2-3-1-要保存什么" class="headerlink" title="2.3.1 要保存什么"></a>2.3.1 要保存什么</h4><ul>
 <li><p>程序运行到了哪里？PC寄存器的值</p>
 </li>
@@ -666,7 +666,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="4-3-状态切换"><a href="#4-3-状态切换" class="headerlink" title="4.3 状态切换"></a>4.3 状态切换</h3><p><img src="/G:/blog\source_posts\初步理解FreeRTOS\arm/07_taskdelay.png" alt="image-20211030145735013"></p>
+<h3 id="4-3-状态切换"><a href="#4-3-状态切换" class="headerlink" title="4.3 状态切换"></a>4.3 状态切换</h3><p><img src="/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3FreeRTOS%5Carm/07_taskdelay.png" alt="image-20211030145735013"></p>
 <h2 id="5-通过链表深入理解调度机制"><a href="#5-通过链表深入理解调度机制" class="headerlink" title="5. 通过链表深入理解调度机制"></a>5. 通过链表深入理解调度机制</h2><ul>
 <li><p>可抢占：高优先级的任务先运行</p>
 </li>
