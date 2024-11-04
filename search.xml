@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>人工智能总结3</title>
+      <link href="/2024/11/04/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%80%BB%E7%BB%933/"/>
+      <url>/2024/11/04/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%80%BB%E7%BB%933/</url>
+      
+        <content type="html"><![CDATA[<h1 id="人工智能——向量化及其应用"><a href="#人工智能——向量化及其应用" class="headerlink" title="人工智能——向量化及其应用"></a>人工智能——向量化及其应用</h1><p>Logistic回归模型中需要对m个训练集依次进行预测计算，如果使用for循环，则会大大增加代码运行时间，因此这里介绍在深度学习中常用的用于减少显化for循环的方法——向量化。</p><p><img src="https://facerman.github.io/img/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/AI4.1.jpg"></p><p>下面通过实际代码例子来证明向量化的优越性：</p><p><img src="https://facerman.github.io/img/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/AI4.2.jpg"></p><p><img src="https://facerman.github.io/img/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/AI4.3.jpg"></p><p>以上是向量化在Logistic回归中正向传播中的应用，后面会持续更新在反向传播中，梯度下降法获得参数时的向量化。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 人工智能 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>人工智能总结2</title>
       <link href="/2024/11/02/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%80%BB%E7%BB%932/"/>
       <url>/2024/11/02/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%80%BB%E7%BB%932/</url>
